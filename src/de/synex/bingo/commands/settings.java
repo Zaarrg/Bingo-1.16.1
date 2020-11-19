@@ -1,134 +1,98 @@
+// 
+// Decompiled by Procyon v0.5.36
+// 
+
 package de.synex.bingo.commands;
 
+import org.bukkit.inventory.meta.ItemMeta;
+import net.md_5.bungee.api.ChatColor;
+import java.util.List;
 import java.util.ArrayList;
-
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.inventory.InventoryHolder;
+import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
 import de.synex.bingo.listeners.Listeners;
 import de.synex.bingo.main.Main;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.command.CommandExecutor;
 
-/*    */ public class settings
-/*    */   implements CommandExecutor
-/*    */ {
-/*    */   Main main;
-		   Listeners L;
-/* 16 */    ItemStack setings;
-			ItemStack Game;
-			ItemStack ComingSoon;
-/*     */   ItemStack t2is;
-/*     */   ItemStack t3is;
-/*     */   ItemStack t4is;
-/*     */   ItemStack t5is;
-/*     */   ItemStack t6is;
-/*     */   ItemStack t7is;
-/*     */   ItemStack t8is;
-/*     */   ItemStack t9is;
-/*     */   ItemStack ph;
-
-			public static Inventory settings = Bukkit.createInventory(null, 27, "ง2Einstellungen");	
-
-/*    */   public settings(Main pl) {
-/* 18 */     this.main = pl;
-/*    */   }
-/*    */ 
-/*    */ 
-/*    */   
-/*    */   public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-/* 24 */     if (sender instanceof Player) {
-/* 25 */       Player p = (Player)sender;
- 								
-				if (p.hasPermission("bingo.settings")) {
-
-/*  73 */       this.setings = new ItemStack(Material.DRAGON_EGG, 1);
-/*  74 */       ItemMeta t1im = this.setings.getItemMeta();
-/*  75 */       t1im.setDisplayName("ง4Difficulties");
-				ArrayList<String> lore = new ArrayList<String>();  				
-				lore.add("ง7- ง6Stelle die Schwierigkeit ein!");
-				t1im.setLore(lore);
-/*  76 */       this.setings.setItemMeta(t1im);
-/*     */ 
-
-
-			
-	        		        	/*  73 */       this.Game = new ItemStack(Material.COMMAND_BLOCK, 1);
-	        		        	/*  74 */       ItemMeta game = this.Game.getItemMeta();
-	        		        	/*  75 */       game.setDisplayName("งaGame Settings");
-	        		        					ArrayList<String> lore1 = new ArrayList<String>();  				
-	        			       					lore1.add("ง7- ง2Settings for the Game");
-	        		        					lore1.add("ง7- ง2Reset");
-	        		        					lore1.add("ง7- ง2Timer");
-	        		        					lore1.add("ง7- ง2SpawnArea");
-	        		        					game.setLore(lore1);	        					
-	        		        	/*  76 */       this.Game.setItemMeta(game);
-	        		        	
-	        		        	
-	        		        	
-	        		        	
-	        		        	
-	        		        	/*  73 */       this.ComingSoon = new ItemStack(Material.RED_BANNER, 1);
-	        		        	/*  74 */       ItemMeta team = this.ComingSoon.getItemMeta();
-	        		        	/*  75 */       team.setDisplayName("งaTeam Settings");
-	        		        					ArrayList<String> lore2 = new ArrayList<String>();    				
-	        			       					lore2.add("ง7- ง2Settings for Teams");
-	        			       					lore2.add("ง7- ง2Teamsize");
-	        		        					team.setLore(lore2);	        					
-	        		        	/*  76 */       this.ComingSoon.setItemMeta(team);
-	        					
-	        		        	
-	        		        	
-	        		        	
-	        		        	
-	        					/*  89 */       this.ph = new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1);
-	        					/*  90 */       ItemMeta phim = this.ph.getItemMeta();
-	        					/*  91 */       phim.setDisplayName(" ");
-	        					/*  92 */       this.ph.setItemMeta(phim);
-	        					
-	        					
-
-	        		        	
-	        					
-	        					
-	        					
-	        		        	
-	        					
-	        		        	
-	        		        	
-	        	                for (int i = 0; i < settings.getSize(); i++) {
-	        	                    if (settings.getItem(i) == null || settings.getItem(i).getType().equals(Material.AIR)) {
-	        	                        settings.setItem(i, this.ph);
-	        	                    }
-	        	                }
-				
-								settings.setItem(9, this.Game);
-								settings.setItem(13, this.ComingSoon);
-				/*  94 */       settings.setItem(17, this.setings);
-
-	
-								
-				
-				p.getPlayer().openInventory(settings);
-/*    */ 
-/*    */ 
-/*    */     
-/* 66 */     } else {
-				p.sendMessage(String.valueOf((Main.getCL()).prefix) + " " + (Main.getCL()).nopermission + " " + ChatColor.DARK_PURPLE + "[bingo.settings]");
-				}
-/*    */   }
-/*    */
-return true; }
+public class settings implements CommandExecutor
+{
+    Main main;
+    Listeners L;
+    ItemStack setings;
+    ItemStack Game;
+    ItemStack ComingSoon;
+    ItemStack t2is;
+    ItemStack t3is;
+    ItemStack t4is;
+    ItemStack t5is;
+    ItemStack t6is;
+    ItemStack t7is;
+    ItemStack t8is;
+    ItemStack t9is;
+    ItemStack ph;
+    public static Inventory settings;
+    
+    static {
+        de.synex.bingo.commands.settings.settings = Bukkit.createInventory((InventoryHolder)null, 27, "ยง2Einstellungen");
+    }
+    
+    public settings(final Main pl) {
+        this.main = pl;
+    }
+    
+    public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {
+        if (sender instanceof Player) {
+            final Player p = (Player)sender;
+            if (p.hasPermission("bingo.settings")) {
+                this.setings = new ItemStack(Material.DRAGON_EGG, 1);
+                final ItemMeta t1im = this.setings.getItemMeta();
+                t1im.setDisplayName("ยง4Difficulties");
+                final ArrayList<String> lore = new ArrayList<String>();
+                lore.add("ยง7- ยง6Stelle die Schwierigkeit ein!");
+                t1im.setLore((List)lore);
+                this.setings.setItemMeta(t1im);
+                this.Game = new ItemStack(Material.COMMAND_BLOCK, 1);
+                final ItemMeta game = this.Game.getItemMeta();
+                game.setDisplayName("ยงaGame Settings");
+                final ArrayList<String> lore2 = new ArrayList<String>();
+                lore2.add("ยง7- ยง2Settings for the Game");
+                lore2.add("ยง7- ยง2Reset");
+                lore2.add("ยง7- ยง2Timer");
+                lore2.add("ยง7- ยง2SpawnArea");
+                game.setLore((List)lore2);
+                this.Game.setItemMeta(game);
+                this.ComingSoon = new ItemStack(Material.RED_BANNER, 1);
+                final ItemMeta team = this.ComingSoon.getItemMeta();
+                team.setDisplayName("ยงaTeam Settings");
+                final ArrayList<String> lore3 = new ArrayList<String>();
+                lore3.add("ยง7- ยง2Settings for Teams");
+                lore3.add("ยง7- ยง2Teamsize");
+                team.setLore((List)lore3);
+                this.ComingSoon.setItemMeta(team);
+                this.ph = new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1);
+                final ItemMeta phim = this.ph.getItemMeta();
+                phim.setDisplayName(" ");
+                this.ph.setItemMeta(phim);
+                for (int i = 0; i < de.synex.bingo.commands.settings.settings.getSize(); ++i) {
+                    if (de.synex.bingo.commands.settings.settings.getItem(i) == null || de.synex.bingo.commands.settings.settings.getItem(i).getType().equals((Object)Material.AIR)) {
+                        de.synex.bingo.commands.settings.settings.setItem(i, this.ph);
+                    }
+                }
+                de.synex.bingo.commands.settings.settings.setItem(9, this.Game);
+                de.synex.bingo.commands.settings.settings.setItem(13, this.ComingSoon);
+                de.synex.bingo.commands.settings.settings.setItem(17, this.setings);
+                p.getPlayer().openInventory(de.synex.bingo.commands.settings.settings);
+            }
+            else {
+                p.sendMessage(String.valueOf(String.valueOf(Main.getCL().prefix)) + " " + Main.getCL().nopermission + " " + ChatColor.DARK_PURPLE + "[bingo.settings]");
+            }
+        }
+        return true;
+    }
 }
-
-
-/* Location:              D:\Java Eclipse\jd-gui-decompiler\Plugins\Bingo-0.5.2.jar!\de\synex\bingo\commands\Start.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */
